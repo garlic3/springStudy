@@ -23,6 +23,7 @@ public class DynamicProxyTest {
 		assertThat(hello.sayHi("Toby"), is("Hi Toby"));
 		assertThat(hello.sayThankYou("Toby"), is("Thank You Toby"));
 		
+		// JDK 다이내믹 프록시 생성
 		Hello proxiedHello = (Hello)Proxy.newProxyInstance(
 				getClass().getClassLoader(), 
 				new Class[] { Hello.class},
@@ -99,9 +100,13 @@ public class DynamicProxyTest {
 	@Test
 	public void proxyFactoryBean() {
 		ProxyFactoryBean pfBean = new ProxyFactoryBean();
+		// 타겟 설정
 		pfBean.setTarget(new HelloTarget());
+		// 부가기능을 담은 어드바이스를 추가
+		// ProxyFactoryBean에게 MethodInterceptor 설정
 		pfBean.addAdvice(new UppercaseAdvice());
 
+		// 생성된 프록시 가져오기
 		Hello proxiedHello = (Hello) pfBean.getObject();
 		
 		assertThat(proxiedHello.sayHello("Toby"), is("HELLO TOBY"));
@@ -109,8 +114,13 @@ public class DynamicProxyTest {
 		assertThat(proxiedHello.sayThankYou("Toby"), is("THANK YOU TOBY"));
 	}
 	
+	
+	// MethodInterceptor : Advice 인터페이스를 상속한다
+	// 타켓 오브젝트에 적용하는 부가 기능을 담은 오브젝트 : 어드바이스
 	static class UppercaseAdvice implements MethodInterceptor {
 		public Object invoke(MethodInvocation invocation) throws Throwable {
+			// MethodInvocation은 메소드의 정보와 타겟 오브젝트를 알고있다
+			// 콜백 오브젝트, proceed() 메소드를 실행하면 타겟 오브젝트의 메소드를 내부적으로 실행
 			String ret = (String)invocation.proceed();
 			return ret.toUpperCase();
 		}
@@ -121,10 +131,14 @@ public class DynamicProxyTest {
 		ProxyFactoryBean pfBean = new ProxyFactoryBean();
 		pfBean.setTarget(new HelloTarget());
 		
+		// 메소드 이름을 비교해서 대상을 선정하는 알고리즘을 제공하는 포인트컷 생성
 		NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+		// 이름 비교조건 설정.
 		pointcut.setMappedName("sayH*"); 
-		
+		// 포인트컷과 어드바이스를 Advisor로 묶어서 한번에 추가
+		// 어드바이저 = 포인트컷(메소드 선정 알고리즘) + 어드바이스(부가기능)
 		pfBean.addAdvisor(new DefaultPointcutAdvisor(pointcut, new UppercaseAdvice()));
+		
 		
 		Hello proxiedHello = (Hello) pfBean.getObject();
 		
@@ -134,13 +148,14 @@ public class DynamicProxyTest {
 	}
 
 
-	
+	// 타겟과 프록시가 구현할 인터페이스
 	static interface Hello {
 		String sayHello(String name);
 		String sayHi(String name);
 		String sayThankYou(String name);
 	}
 	
+	// 타겟 클래스
 	static class HelloTarget implements Hello {
 		public String sayHello(String name) {
 			return "Hello " + name;

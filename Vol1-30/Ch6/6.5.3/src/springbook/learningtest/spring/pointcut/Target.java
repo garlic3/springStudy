@@ -1,6 +1,7 @@
 package springbook.learningtest.spring.pointcut;
 
 public class Target implements TargetInterface {
+	// 타켓 인터페이스 구현 메소드
 	public void hello() {
 	}
 
@@ -15,5 +16,6 @@ public class Target implements TargetInterface {
 		return 0;
 	}
 	
+	// 타겟 클래스 정의 메소드
 	public void method() {}
 }

@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost/springbook?characterEncoding=UTF-8" />
-		<property name="username" value="spring" />
-		<property name="password" value="book" />
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:tcp://localhost/~/sa" />
+		<property name="username" value="sa" />
+		<property name="password" value="sa" />
 	</bean>
 	
 	<bean id="transactionManager" 
@@ -16,14 +16,18 @@
 	</bean>
 	
 	<!-- aop -->
+	<!-- 다른 빈에서 참조되거나 빈이름으로 조회될 필요가 없다면 아이디를 등록하지 않아도 상관없다 -->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 	
 	<bean id="transactionAdvice" class="springbook.user.service.TransactionAdvice">
 		<property name="transactionManager" ref="transactionManager" />
 	</bean>
 	
+	
 	<bean id="transactionPointcut" class="springbook.user.service.NameMatchClassMethodPointcut">
+		<!-- 클래스이름 패턴 -->
 		<property name="mappedClassName" value="*ServiceImpl" />
+		<!-- 메소드 이름 패턴 -->
 		<property name="mappedName" value="upgrade*" />
 	</bean>
 	
@@ -42,6 +46,8 @@
 		<property name="mailSender" ref="mailSender" />
 	</bean>
 	
+	<!-- 스태틱 멤버 클래스 이름은 $로 지정한다 -->
+	<!-- parent : userService 빈의 설정을 상속받는다 -->
 	<bean id="testUserService" class="springbook.user.service.UserServiceTest$TestUserServiceImpl" parent="userService" />
 	
 	<!-- 

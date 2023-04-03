@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(user.getEmail());
 		mailMessage.setFrom("useradmin@ksug.org");
-		mailMessage.setSubject("Upgrade ¾È³»");
-		mailMessage.setText("»ç¿ëÀÚ´ÔÀÇ µî±ÞÀÌ " + user.getLevel().name());
+		mailMessage.setSubject("Upgrade ï¿½È³ï¿½");
+		mailMessage.setText("ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ " + user.getLevel().name());
 		
 		this.mailSender.send(mailMessage);
 	}
@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
+	// DAOë¡œ ìœ„ìž„
 	public void deleteAll() { 	userDao.deleteAll(); }
 	public User get(String id) { return userDao.get(id); }
 	public List<User> getAll() { return userDao.getAll(); }

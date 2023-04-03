@@ -137,15 +137,18 @@ public class DynamicProxyTest {
 
 	@Test
 	public void classNamePointcutAdvisor() {
+		// 포인트컷 
 		NameMatchMethodPointcut classMethodPointcut = new NameMatchMethodPointcut() {  
 			public ClassFilter getClassFilter() {
 				return new ClassFilter() {
 					public boolean matches(Class<?> clazz) {
+						// 클래스 이름이 HelloT로 시작하는것만 선정하는 필터
 						return clazz.getSimpleName().startsWith("HelloT");
 					}
 				};
 			}
 		};
+		
 		classMethodPointcut.setMappedName("sayH*");
 
 		checkAdviced(new HelloTarget(), classMethodPointcut, true);  

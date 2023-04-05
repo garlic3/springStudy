@@ -3,7 +3,7 @@ SpringFramework Study
 
 참고자료: 토비의 스프링1, 2
 
-토비의 스프링 1
+##토비의 스프링 1
   - 오브젝트와 의존관계
   - 테스트
   - 템플릿
@@ -185,6 +185,15 @@ TransactionInterceptor
 트랜잭션 추상화
   - 트랙잭션 매니저, 트랜잭션 동기화
   
+...
+## 토비의 스프링2
+  - IoC 컨테이너와 DI
+  - 데이터 액세스 기술
+  - 스프링 웹 기술과 스프링 MVC
+  - 스프링 @MVC
+  - AOPdhk LTW
+  - 테스트 컨텍스트 프레임워크
+  - 스프링의 기타기술
 
 StaticApplicationContext
   - 코드를 통해 빈 메타정보를 등록하기 위해 사용

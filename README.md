@@ -234,6 +234,19 @@ WebApplicationContext
   - @Repository : 데이터 액세스 계층의 DAO 또는 리포지토리 클래스
   - @Service : 서비스 계층의 클래스
   - @Controller : 프레젠테이션 계층의 MVC 컨트롤러
+ 
+빈 등록 메타정보 설정 방법
+  - XML 단독 사용
+  - XML과 빈 스캐닝 혼용
+  - 빈 스캐닝 단독 사용
+  
+빈 의존관계 설정 방법
+  - 직접 지정
+  - 타입비교를 통해 자동 와이어링(autowiring)
+  
+  - XML <property>, <constructor-arg> : setter 메소드, 생성자
+    value : 단순값 또는 빈이 아닌 오브젝트 주입시 사용
+    
   
   
   
